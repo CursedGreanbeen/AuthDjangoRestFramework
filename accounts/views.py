@@ -46,6 +46,7 @@ def login_user(request):
             return JsonResponse({'error': 'Incorrect password'}, status=401)
 
         payload = {'user_id': user.id, 'exp': datetime.utcnow() + timedelta(days=1)}
+
         try:
             token = jwt.encode(payload, key=settings.SECRET_KEY, algorithm='HS256')
         except Exception as e:
@@ -53,4 +54,5 @@ def login_user(request):
                 {'error': 'Token generation error'},
                 status=500
             )
+
         return JsonResponse({'token': token}, status=200)
