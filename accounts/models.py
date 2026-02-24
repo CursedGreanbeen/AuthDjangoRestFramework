@@ -21,7 +21,7 @@ class User(models.Model):
 
     def cypher_password(self, password):
         salt = bcrypt.gensalt()
-        self.hash_password = bcrypt.hashpw(
+        self.password = bcrypt.hashpw(
             password.encode('utf-8'),
             salt
         ).decode('utf-8')
@@ -29,11 +29,5 @@ class User(models.Model):
     def check_password(self, password):
         return bcrypt.checkpw(
             password.encode('utf-8'),
-            self.hash_password.encode('utf-8')
+            self.password.encode('utf-8')
         )
-
-    def return_json(self):
-        pass
-
-    def save_user(self):
-        pass
