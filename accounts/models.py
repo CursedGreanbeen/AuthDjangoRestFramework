@@ -12,7 +12,7 @@ ROLE_CHOICES = [
 
 class User(models.Model):
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=50)  # check length
+    password = models.CharField(max_length=60)  # check length
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
     patronymic = models.CharField(max_length=100)

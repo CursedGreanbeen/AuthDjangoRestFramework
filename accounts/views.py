@@ -6,8 +6,10 @@ from datetime import datetime, timedelta
 from django.http import JsonResponse
 from .models import User
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def register_new_user(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -27,7 +29,7 @@ def register_new_user(request):
         return JsonResponse({'status': 'ok'}, status=201)
 
 
-
+@csrf_exempt
 def login_user(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -56,3 +58,10 @@ def login_user(request):
             )
 
         return JsonResponse({'token': token}, status=200)
+
+
+@csrf_exempt
+def logout_user(request):
+    if request.method == 'POST':
+        return JsonResponse({'status': 'logged out'}, status=200)
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
