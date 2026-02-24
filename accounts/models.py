@@ -3,10 +3,10 @@ from django.db import models
 
 
 ROLE_CHOICES = [
-    ('admin', 'Administrator'),
-    ('manager', 'Manager'),
-    ('user', 'User'),
-    ('guest', 'Guest'),
+        ('admin', 'Administrator'),
+        ('manager', 'Manager'),
+        ('user', 'User'),
+        ('guest', 'Guest'),
     ]
 
 
