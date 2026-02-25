@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from .utils import check_permission
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 class MockArticle:
@@ -47,3 +49,22 @@ article_list = [
         owner_id=1
     )
 ]
+
+
+@csrf_exempt
+def article_list(request):
+    if request.method != 'GET':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+    if not check_permission(request.user, 'article', 'read'):
+        return JsonResponse({'error': 'Forbidden'}, status=403)
+
+    can_read_all = check_permission(request.user, 'article', 'read_all')
+
+    if can_read_all:
+        articles = article_list
+    else:
+        articles = [a for a in article_list if a.owner_id == request.user.id]
+
+    data = [{'id': a.id, 'title': a.title, 'content': a.content} for a in articles]
+    return JsonResponse({'articles': data}, status=200)
