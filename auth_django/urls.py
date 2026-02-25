@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from accounts.views import register_new_user, login_user, logout_user
+from roles_permissions.views import article_list
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/register/', register_new_user, name='register'),
     path('api/login/', login_user, name='login'),
     path('api/logout/', logout_user, name='logout'),
+    path('api/articles/', article_list, name='article_list'),
 ]
