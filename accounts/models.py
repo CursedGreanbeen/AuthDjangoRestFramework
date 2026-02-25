@@ -16,7 +16,7 @@ class User(models.Model):
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
     patronymic = models.CharField(max_length=100)
-    role = models.CharField(choices=ROLE_CHOICES, default='guest')
+    role = models.ForeignKey('roles_permissions.Role', on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
     def cypher_password(self, password):
